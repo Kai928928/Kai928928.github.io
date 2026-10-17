@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>九分学长考雅机考平台</title>
+    <!--
+      iPad / 浏览器版注入配置。
+      桌面端的 Electron preload 会在运行时把 __APP_CONFIG__ 和 xxggShell/xxggUpdater
+      注入到页面。浏览器里没有 preload，这里手动注入等价内容。
+      API 直接指向官方线上接口，已实测 CORS 开放（允许 token 头 + 反射来源），
+      因此纯静态托管即可跨域调用，无需自建后端。
+    -->
+    <script>
+      window.__APP_CONFIG__ = {
+        apiMode: "online",
+        practiceApiBaseUrl: "https://www.9fnnn.com/api",
+        userAuthApiBaseUrl: "https://www.9fnnn.com/api",
+        apiBaseUrl: "https://www.9fnnn.com/api/listen",
+        env: "production"
+      };
+      // 前端对这些 Electron 专属全局变量做了空值/可选链保护，不存在也不会崩。
+      // 这里给一个无害桩对象，仅用于让标题栏等组件走 darwin(无原生标题栏)分支，更适合移动端。
+      window.xxggApp = { name: "xxgg-ielts", productName: "九分学长考雅机考平台", packageName: "xxgg-ielts", version: "0.9.18-rc.5" };
+      window.xxggShell = { platform: "darwin", isDev: false };
+      window.xxggUpdater = {};
+    </script>
+    <script type="module" crossorigin src="./assets/index-X-rTTlBK.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CBsZvY3e.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
